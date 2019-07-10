@@ -8,7 +8,7 @@ function WelcomeMessage() {
         if(firstVisit) {
           return (
             <div>
-              Welcome to CoinDash
+              Welcome to CoinDash, please select your favorite coins to get started.
             </div>
           )
 

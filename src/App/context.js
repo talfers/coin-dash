@@ -1,5 +1,7 @@
 import React from 'react';
 
+const cc = require('cryptocompare');
+
 export const AppContext = React.createContext();
 
 export class AppProvider extends React.Component {
@@ -32,6 +34,15 @@ export class AppProvider extends React.Component {
     localStorage.setItem('coinDash', JSON.stringify({
       test: 'Hello, first-timer!'
     }));
+  }
+
+  componentDidMount() {
+    this.fetchCoins();
+  }
+
+  fetchCoins = async () => {
+    let coinList = (await cc.coinList()).Data;
+    this.setState({coinList});
   }
 
   render () {
