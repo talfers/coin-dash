@@ -19,6 +19,6 @@ function App() {
       </AppProvider>
     </AppLayout>
   );
-}
+ }
 
 export default App;
