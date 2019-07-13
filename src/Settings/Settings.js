@@ -8,11 +8,11 @@ import Search from './Search';
 function Settings() {
   return (
     <Page name="settings">
-      <WelcomeMessage/>
+      <WelcomeMessage />
       <CoinGrid topSection />
-      <ConfirmButton/>
-      <Search/>
-      <CoinGrid/>
+      <ConfirmButton />
+      <Search />
+      <CoinGrid />
     </Page>
   )
 }

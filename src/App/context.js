@@ -18,7 +18,8 @@ export class AppProvider extends React.Component {
       confirmFavorites: this.confirmFavorites,
       addCoin: this.addCoin,
       removeCoin: this.removeCoin,
-      isInFavorites: this.isInFavorites
+      isInFavorites: this.isInFavorites,
+      setFilteredCoins: this.setFilteredCoins
     }
   }
 
@@ -72,6 +73,11 @@ export class AppProvider extends React.Component {
   isInFavorites = (key) => {
     let favorites = [...this.state.favorites]
     return favorites.includes(key);
+  }
+
+  // Take in filtered list, sets the "filteredCoin" state
+  setFilteredCoins = (filteredCoins) => {
+    this.setState({filteredCoins: filteredCoins});
   }
 
   render () {
