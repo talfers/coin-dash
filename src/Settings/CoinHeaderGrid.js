@@ -21,7 +21,7 @@ const DeleteIcon = styled.div`
 ` ;
 
 
-export default function CoinHeaderGrid({name, symbol, topSection}) {
+export default function CoinHeaderGrid({name, symbol, topSection, isInFavorites}) {
   return (
     <CoinHeaderGridStyled>
       <div> {name} </div>
