@@ -13,7 +13,7 @@ export class AppProvider extends React.Component {
     this.state = {
       page: "dashboard",
       setPage: this.setPage,
-      favorites: ['ETH', 'BTC', 'LTC'],
+      favorites: ['BTC', 'ETH', 'LTC'],
       ...this.savedSettings(),
       confirmFavorites: this.confirmFavorites,
       addCoin: this.addCoin,
