@@ -13,8 +13,12 @@ function toProperCase(lower) {
 function ControlBtn({name, active}) {
   return (
     <AppContext.Consumer>
-      {({page, setPage}) => (
-        <ControlBtnElement onClick={() => setPage(name)} active={page === name}>
+      {({firstVisit, page, setPage}) => (
+        <ControlBtnElement
+          onClick={() => setPage(name)}
+          active={page === name}
+          hidden={firstVisit && name==='dashboard'}
+        >
           {toProperCase(name)}
         </ControlBtnElement>
       )}
@@ -46,6 +50,9 @@ const ControlBtnElement = styled.div`
   cursor: pointer;
   ${props => props.active && css`
       text-shadow: 0px 0px 60px #03ff03;
+    `}
+  ${props => props.hidden && css`
+      display: none
     `}
 `
 
