@@ -15,6 +15,7 @@ export class AppProvider extends React.Component {
       favorites: ['BTC', 'ETH', 'LTC'],
       ...this.savedSettings(),
       confirmFavorites: this.confirmFavorites,
+      setCurrentFavorite: this.setCurrentFavorite,
       addCoin: this.addCoin,
       removeCoin: this.removeCoin,
       isInFavorites: this.isInFavorites,
@@ -27,9 +28,9 @@ export class AppProvider extends React.Component {
     if(!coinDashData){
       return {page: 'settings', firstVisit: true}
     } else {
-      let {favorites} = coinDashData;
+      let {favorites, currentFavorite} = coinDashData;
       return (
-        {favorites}
+        {favorites, currentFavorite}
       )
     }
   }
@@ -37,16 +38,29 @@ export class AppProvider extends React.Component {
   setPage = page => this.setState({page});
 
   confirmFavorites = () => {
+    let currentFavorite = this.state.favorites[0];
     this.setState({
       firstVisit: false,
-      page: "dashboard"
+      page: "dashboard",
+      currentFavorite
       // Callback after to fetch prices for user favorites
     }, () => {
       this.fetchPrices();
     });
     localStorage.setItem('coinDash', JSON.stringify({
-      favorites: this.state.favorites
+      favorites: this.state.favorites,
+      currentFavorite
     }));
+  }
+
+  setCurrentFavorite = (sym) => {
+    this.setState({
+      currentFavorite: sym
+    });
+    localStorage.setItem('coinDash', JSON.stringify({
+      ...JSON.parse(localStorage.getItem('coinDash')),
+      currentFavorite: sym
+    }))
   }
 
   componentDidMount() {
