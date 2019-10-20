@@ -9,10 +9,13 @@ ReactHighcharts.Highcharts.setOptions(HighchartsTheme);
 export default function() {
   return (
     <AppContext.Consumer>
-      {() => {
+      {({historical}) => {
         return(
           <Tile>
-            <ReactHighcharts config={highchartsConfig()} />
+            {historical?
+              <ReactHighcharts config={highchartsConfig({historical})}/>
+              :<div>Loading historical data...</div>
+            }
           </Tile>
         )
 

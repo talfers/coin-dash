@@ -1,10 +1,13 @@
 import React from 'react';
-
+import moment from 'moment';
 const cc = require('cryptocompare');
 
 export const AppContext = React.createContext();
 
+// for max num of favorties in arr
 const MAX_FAVORITES = 10;
+// for max num of 'days' to fetch data for
+const TIME_UNITS = 10;
 
 export class AppProvider extends React.Component {
   constructor(props) {
@@ -42,10 +45,13 @@ export class AppProvider extends React.Component {
     this.setState({
       firstVisit: false,
       page: "dashboard",
-      currentFavorite
+      currentFavorite,
+      prices: null,
+      historical: null
       // Callback after to fetch prices for user favorites
     }, () => {
       this.fetchPrices();
+      this.fetchHistorical();
     });
     localStorage.setItem('coinDash', JSON.stringify({
       favorites: this.state.favorites,
@@ -54,9 +60,12 @@ export class AppProvider extends React.Component {
   }
 
   setCurrentFavorite = (sym) => {
+    // Fetch historical after the setState
+    // Clear hist to not show old, and show indictor (very smart!)
     this.setState({
-      currentFavorite: sym
-    });
+      currentFavorite: sym,
+      historical: null
+    }, this.fetchHistorical);
     localStorage.setItem('coinDash', JSON.stringify({
       ...JSON.parse(localStorage.getItem('coinDash')),
       currentFavorite: sym
@@ -66,6 +75,7 @@ export class AppProvider extends React.Component {
   componentDidMount() {
     this.fetchCoins();
     this.fetchPrices();
+    this.fetchHistorical();
   }
 
   fetchCoins = async () => {
@@ -78,7 +88,6 @@ export class AppProvider extends React.Component {
     if(this.state.firstVisit) {return};
     // MUST await this too because at first will be receiving promises (promise array)
     let prices = await this.prices();
-    console.log(prices);
     this.setState({prices});
   }
 
@@ -93,7 +102,39 @@ export class AppProvider extends React.Component {
         console.log('Fetch price error: ', e)
       }}
       return returnData;
+  }
 
+  fetchHistorical = async () => {
+    if(this.state.firstVisit) return;
+    const results = await this.historical();
+    let historical = [
+      {
+        // data will be array of arrays with x and y values (data and price)
+        name: this.state.currentFavorite,
+        data: results.map((ticker, i) => {
+          return [
+            moment().subtract({months: TIME_UNITS - i}).valueOf(),
+            ticker.USD
+          ]
+        })
+      }
+    ]
+    this.setState({historical});
+  }
+
+  historical = () => {
+    let promises = [];
+    for(let i = TIME_UNITS; i > 0; i--) {
+      promises.push(
+        cc.priceHistorical(
+          this.state.currentFavorite,
+          ['USD'],
+          moment().subtract({months: i}).toDate()
+        )
+      )
+    }
+    // Return when ALL promises are resolved
+    return Promise.all(promises)
   }
 
   addCoin = (key) => {
