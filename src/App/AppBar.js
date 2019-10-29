@@ -42,7 +42,7 @@ function AppBar() {
 
 const Bar = styled.div`
   display: grid;
-  grid-template-columns: 180px auto 100px 100px;
+  grid-template-columns: 180px auto 100px 100px 72px;
   margin-bottom: 40px;
 `
 

@@ -7,6 +7,10 @@ const PriceGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 1rem;
+
+  @media screen and (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `
 
 export default function() {

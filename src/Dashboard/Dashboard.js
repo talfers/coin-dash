@@ -10,6 +10,11 @@ const ChartGrid = styled.div`
   margin-top: 20px;
   grid-gap: 15px;
   grid-template-columns: 1fr 3fr;
+
+  @media screen and (max-width: 1024px) {
+    display: flex;
+    flex-direction: column;
+  }
 `
 
 function Dashboard() {

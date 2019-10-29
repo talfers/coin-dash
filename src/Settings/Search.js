@@ -7,6 +7,10 @@ import fuzzy from 'fuzzy';
 const SearchGrid = styled.div`
   display: grid;
   grid-template-columns: 200px 1fr;
+
+  @media screen and (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
 `
 
 const SearchInput = styled.input`

@@ -3,3 +3,7 @@ body {
   color: #fff;
   font-family: 'Do Hyeon', sans-serif;
 }
+
+#root {
+  min-width: 100vw;
+}

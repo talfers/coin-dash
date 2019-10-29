@@ -9,6 +9,7 @@ ReactHighcharts.Highcharts.setOptions(HighchartsTheme);
 
 
 export default function() {
+
   return (
     <AppContext.Consumer>
       {({historical, changeChartSelect}) => {
@@ -23,7 +24,7 @@ export default function() {
             <option value="months"> Months </option>
           </ChartSelect>
             {historical?
-              <ReactHighcharts config={highchartsConfig({historical})}/>
+              <ReactHighcharts config={highchartsConfig(historical)}/>
               :<div>Loading historical data...</div>
             }
           </Tile>

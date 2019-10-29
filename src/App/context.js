@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 const cc = require('cryptocompare');
+cc.setApiKey('bdcab40d08ea40b154203617319775c19d3ba646233ec72f4c816b177501da23');
 
 export const AppContext = React.createContext();
 
@@ -13,6 +14,7 @@ export class AppProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      theme: "dark",
       page: "dashboard",
       setPage: this.setPage,
       favorites: ['BTC', 'ETH', 'LTC'],
